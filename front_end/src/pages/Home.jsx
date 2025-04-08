@@ -18,24 +18,37 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold mb-6">All Hotels</h1>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <h1 className="text-4xl font-bold text-center text-gray-800 mb-10">Explore Our Hotels</h1>
+
       {hotels.length === 0 ? (
-        <p className="text-gray-600">No hotels found.</p>
+        <p className="text-gray-600 text-center">No hotels found.</p>
       ) : (
-        hotels.map((hotel) => (
-          <div key={hotel._id} className="border p-4 mb-4 rounded shadow hover:shadow-md transition">
-            <h2 className="text-xl font-semibold">{hotel.name}</h2>
-            <p className="text-gray-600">{hotel.location}</p>
-            <p className="text-blue-600 font-medium">${hotel.pricePerNight} / night</p>
-            <Link
-              to={`/hotels/${hotel._id}`}
-              className="inline-block mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {hotels.map((hotel) => (
+            <div
+              key={hotel._id}
+              className="bg-white rounded-xl shadow-md hover:shadow-lg transition duration-300 overflow-hidden"
             >
-              View Details
-            </Link>
-          </div>
-        ))
+              <img
+                src={hotel.images[0] || 'https://via.placeholder.com/400x250'}
+                alt={hotel.name}
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-5">
+                <h2 className="text-2xl font-semibold text-gray-800 mb-1">{hotel.name}</h2>
+                <p className="text-gray-500 mb-1">{hotel.location}</p>
+                <p className="text-blue-600 font-medium mb-4">${hotel.pricePerNight} / night</p>
+                <Link
+                  to={`/hotels/${hotel._id}`}
+                  className="inline-block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+                >
+                  View Details
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
