@@ -11,6 +11,9 @@ const HotelDetails = () => {
   const [guests, setGuests] = useState(1);
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  
+  // console.log(user);
+  
 
   useEffect(() => {
     const fetchHotel = async () => {
@@ -38,14 +41,16 @@ const HotelDetails = () => {
       await axios.post(
         'http://localhost:5000/api/bookings',
         {
-          hotelId: id,
+          user : user.user.id,
+          hotel: id,
           checkIn,
           checkOut,
           guests,
+          totalPrice:hotel.pricePerNight
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: token
           },
         }
       );
@@ -60,12 +65,15 @@ const HotelDetails = () => {
 
   if (!hotel) return <p className="text-center text-lg mt-10">Loading hotel details...</p>;
 
-  console.log(hotel);
+  // console.log(hotel);
   
 
   return (
+
     <div className="max-w-6xl mx-auto p-6">
+
       <div className="grid md:grid-cols-2 gap-8">
+
         {/* Hotel Image */}
         <div className="rounded overflow-hidden shadow-lg">
           <img
@@ -124,7 +132,7 @@ const HotelDetails = () => {
               type="submit"
               className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
             >
-              Book Now
+             {hotel.pricePerNight*guests}
             </button>
           </form>
         </div>

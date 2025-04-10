@@ -1,37 +1,52 @@
 const Booking = require('../models/Booking');
 const Hotel = require('../models/Hotel');
+const User = require('../models/User');
 
 
 const newBooking = async (req, res) => {
   try {
-    const { hotelId, checkIn, checkOut, guests } = req.body;
+    const { userId , hotelId, checkIn, checkOut, guests,totalPrice } = req.body;
 
-    const hotel = await Hotel.findById(hotelId);
+    // console.log(req.body);
+    
+    const hotel = await Hotel.findOne(hotelId);
+    const user = await User.findOne(userId);
+    
     if (!hotel) return res.status(404).json({ message: 'Hotel not found' });
-
+    
     const nights = Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24));
-    const totalPrice = nights * hotel.pricePerNight;
+    // totalPrice = totalPrice * nights;
 
     const booking = new Booking({
-      user: req.user.id,
-      hotel: hotelId,
+      user: user._id,
+      hotel: hotel._id,
       checkIn,
       checkOut,
       guests,
       totalPrice
     });
+    
+    // console.log(booking);
 
-    await booking.save();
-    res.status(201).json(booking);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    const d = await booking.save();
+
+    console.log(d);
+
+    res.status(200).json("booked");
+
+  } 
+  catch (err) 
+  {
+    res.status(500).json({ error: "Booking Failed" });
   }
 }
+
+
 
 const userBooking = async (req, res) => {
   try {
     const bookings = await Booking.find({ user: req.user.id }).populate('hotel');
-    res.json(bookings);
+    res.status(200).json(bookings);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
