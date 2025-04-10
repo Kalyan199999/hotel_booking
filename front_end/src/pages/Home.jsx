@@ -28,7 +28,7 @@ const Home = () => {
           {hotels.map((hotel) => (
             <div
               key={hotel._id}
-              className="bg-white rounded-xl shadow-md hover:shadow-lg transition duration-300 overflow-hidden"
+              className="bg-white rounded-xl shadow-md hover:shadow-lg transition duration-300 overflow-hidden "
             >
               <img
                 src={hotel.images[0] || 'https://via.placeholder.com/400x250'}

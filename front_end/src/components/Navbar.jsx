@@ -16,6 +16,7 @@ const Navbar = () => {
       
       <div className="space-x-4">
         <Link to="/" className="text-lg font-semibold text-blue-600 hover:underline">Home</Link>
+        <Link to="/add-hotel" className="text-lg font-semibold text-blue-600 hover:underline">Add Hotel</Link>
         {user && <Link to="/dashboard" className="text-blue-600 hover:underline">Dashboard</Link>}
       </div>
       

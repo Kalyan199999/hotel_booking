@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import HotelDetails from './pages/HotelDetails';
+import AddHotel from './pages/AddHotel';
 import Navbar from './components/Navbar'
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/hotels/:id" element={<HotelDetails />} />
+        <Route path="/add-hotel" element={<AddHotel />} />
       </Routes>
 
     </Router>

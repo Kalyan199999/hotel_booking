@@ -2,21 +2,47 @@ const express = require('express');
 const Hotel = require('../models/Hotel');
 const auth = require('../middleware/auth');
 const router = express.Router();
+const upload = require('../middleware/upload');
 
-// Create a hotel (admin only for now)
-router.post('/', auth, async (req, res) => {
+router.post('/', auth, upload.single('images'), async (req, res) => {
+  
   try {
-    if (req.user.role !== 'admin') {
-      return res.status(403).json({ message: 'Access denied' });
-    }
+    
+    const obj = req.body
 
-    const hotel = new Hotel(req.body);
-    await hotel.save();
-    res.status(201).json(hotel);
+
+    const name = obj.name
+    const location = obj.location;
+    const description = obj.description;
+    const pricePerNight = obj.pricePerNight;
+    const amenities = obj.amenities.split(',');
+    
+    const imagePaths = []
+    
+    const newHotel = new Hotel({
+      name,
+      description,
+      location,
+      pricePerNight,
+      amenities:amenities,
+      images: imagePaths,
+    });
+
+    console.log(newHotel);
+    
+
+    const savedHotel = await newHotel.save();
+
+    res.status(201).json(savedHotel);
+
   } catch (err) {
+    console.log("error");
+    
     res.status(500).json({ error: err.message });
   }
 });
+
+
 
 // Get all hotels (public)
 router.get('/', async (req, res) => {
