@@ -15,9 +15,9 @@ const AddHotel = () => {
   const { user } = useContext(AuthContext);
   const [form, setForm] = useState(sample_obj);
  
- if( user ){
-  console.log(user.user.role);
- }
+//  if( user ){
+//   console.log(user.user.role);
+//  }
 
 
   const handleChange = (e) => {
@@ -25,6 +25,9 @@ const AddHotel = () => {
     
     
     if (name === 'images') {
+
+      console.log(files);
+      
       setForm({ ...form, images: files[0]}); // multiple files
     } else {
       setForm({ ...form, [name]: value });
@@ -36,19 +39,19 @@ const AddHotel = () => {
 
     const url ='http://localhost:5000/api/hotels'
 
-    console.log(form);
+    // console.log(form);
 
     try {
       const res = await axios.post(url, form, {
         
         headers: {
-          // 'Content-Type': 'multipart/form-data',
+          'Content-Type': 'multipart/form-data',
           Authorization: user.token
         },
       });
 
       alert('Hotel added successfully!');
-      console.log(res);
+      // console.log(res);
 
       setForm( sample_obj )
 
@@ -72,14 +75,16 @@ const AddHotel = () => {
         <input name="pricePerNight" type="number" placeholder="Price per Night" value={form.pricePerNight} onChange={handleChange} required className="w-full border p-2 rounded" />
         <input name="amenities" placeholder="Amenities (comma-separated)" value={form.amenities} onChange={handleChange} required className="w-full border p-2 rounded" />
         
-        <input
-          name="images"
-          type="file"
-          accept="image/*"
-          // multiple
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-        />
+       
+
+      <input 
+       name="images"
+        type="file" 
+        multiple 
+        accept="image/*" 
+        onChange={handleChange}
+        className="w-full border p-2 rounded"
+      />  
 
         <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
           Add Hotel

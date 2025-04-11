@@ -16,6 +16,9 @@ const Dashboard = () => {
           },
         });
         setBookings(res.data);
+
+        console.log(res.data);
+        
       } catch (err) {
         console.error(err);
       }

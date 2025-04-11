@@ -4,7 +4,7 @@ const upload = require('../middleware/upload');
 const { addNewHotel,getAllHotel,getHotelById } = require('../controllers/hotels');
 
 const router = express.Router();
-router.post('/', auth, upload.single('images'), addNewHotel);
+router.post('/', auth, upload.array('images', 5), addNewHotel);
 
 // Get all hotels (public)
 router.get('/', getAllHotel);

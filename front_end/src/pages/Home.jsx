@@ -10,6 +10,9 @@ const Home = () => {
       try {
         const res = await axios.get('http://localhost:5000/api/hotels');
         setHotels(res.data);
+
+
+        
       } catch (err) {
         console.error(err);
       }
@@ -24,17 +27,28 @@ const Home = () => {
       {hotels.length === 0 ? (
         <p className="text-gray-600 text-center">No hotels found.</p>
       ) : (
+        
+         
+          
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          { console.log(hotels)}
           {hotels.map((hotel) => (
+           
             <div
               key={hotel._id}
               className="bg-white rounded-xl shadow-md hover:shadow-lg transition duration-300 overflow-hidden "
             >
-              <img
-                src={hotel.images[0] || 'https://via.placeholder.com/400x250'}
-                alt={hotel.name}
-                className="w-full h-48 object-cover"
-              />
+    
+              {
+                hotel.images.length > 0 && (
+                  <img 
+                    src={`http://localhost:5000/${hotel.images[0].path}`} 
+                    alt={hotel.images[0].filename}
+                     className="w-full h-48 object-cover"
+                  />)
+              }
+             
+
               <div className="p-5">
                 <h2 className="text-2xl font-semibold text-gray-800 mb-1">{hotel.name}</h2>
                 <p className="text-gray-500 mb-1">{hotel.location}</p>

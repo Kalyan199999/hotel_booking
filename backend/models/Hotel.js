@@ -6,8 +6,15 @@ const hotelSchema = new mongoose.Schema({
   description: String,
   pricePerNight: { type: Number, required: true },
   amenities: [String],
-  images: [String], // URLs or file paths
-  rooms: Number,
+  images:  [{
+    path: String,
+    filename: String,
+    originalName: String,
+    destination:String,
+    fieldname:String,
+    createdAt: { type: Date, default: Date.now }
+  }],
+  rooms: {type:Number , default1:1},
 }, { timestamps: true });
 
 module.exports = mongoose.model('Hotel', hotelSchema);

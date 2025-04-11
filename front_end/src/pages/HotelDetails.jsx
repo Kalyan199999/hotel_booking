@@ -77,9 +77,9 @@ const HotelDetails = () => {
         {/* Hotel Image */}
         <div className="rounded overflow-hidden shadow-lg">
           <img
-            src={hotel.images[ 0 ] || 'https://via.placeholder.com/600x400'}
+            src={`http://localhost:5000/${hotel.images[0].path}`} 
             alt={hotel.name}
-            className="w-full h-96 object-cover"
+            className="w-full h-full object-cover"
           />
         </div>
 
